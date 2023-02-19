@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  movieapp-front:
+    image: movieapp-front:v1.0
+    restart: always
+    networks:
+      - movieapp-network
+
+  movieapp-user-reviews:
+    image: movieapp-user-reviews:v1.0
+    restart: always
+    ports:
+      - "8002:8002"
+    networks:
+      - movieapp-network
+
+  movieapp-reviews:
+    image: movieapp:v1.0
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - movieapp-network
+
+
+  movieapp-db:
+    image: mysql:latest
+    restart: always
+    container_name: root
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin1
+    networks:
+      - movieapp-network
+
+networks:
+  movieapp-network:
+    external: true
